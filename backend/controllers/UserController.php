@@ -12,32 +12,24 @@ class UserController extends BaseController
 {
     public function actionIndex()
     {
-        $request = Yii::$app->request;
-        $data = [
-            'page' => $request->post('page'),
-            'pageSize' => $request->post('pageSize'),
-            'all' => $request->post('all', false),
-        ];
-
-        $model = DynamicModel::validateData($data, [
-            ['page', 'integer', 'min' => 1],
-            ['page', 'default', 'value' => 1],
-            ['pageSize', 'integer', 'min' => 1],
-            ['pageSize', 'default', 'value' => 10],
-            ['all', 'boolean'],
+        $data = $this->getPost([
+            'page' => 1,
+            'pageSize' => 10,
+            'all' => false,
         ]);
 
-        if ($model->hasErrors()) {
-            $errors = $model->getFirstErrors();
-            throw new ApiException(ApiException::PARAM_ERROR, array_shift($errors));
-        }
+        $validate = $this->validateData($data, [
+            ['page', 'integer', 'min' => 1],
+            ['pageSize', 'integer', 'min' => 1],
+            ['all', 'boolean'],
+        ]);
 
         $query = AdminModel::find();
 
         //是否分页获取
-        if (!$model->all) {
-            $query = $query->offset($model->page - 1)
-                ->limit($model->pageSize);
+        if (!$validate->all) {
+            $query = $query->offset($validate->page - 1)
+                ->limit($validate->pageSize);
         }
 
         $result = $query
@@ -47,4 +39,11 @@ class UserController extends BaseController
             ->all();
         return $this->success('success', ['users' => $result]);
     }
+
+    public function actionAdd()
+    {
+
+    }
+
+
 }

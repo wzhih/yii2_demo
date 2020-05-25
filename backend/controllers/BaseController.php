@@ -5,6 +5,7 @@ namespace backend\controllers;
 
 use backend\models\AdminModel;
 use Yii;
+use yii\base\DynamicModel;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use common\traits\Token;
@@ -89,6 +90,42 @@ class BaseController extends Controller
     public function actionIndex()
     {
         return $this->success('success');
+    }
+
+    /**
+     * 根据规则获取POST参数
+     * @param array $rules
+     * @return array
+     */
+    public function getPost(array $rules = [])
+    {
+        $request = Yii::$app->request;
+        $data = [];
+        foreach ($rules as $name => $default) {
+            $data[$name] = $request->post($name, $default);
+        }
+
+        return $data;
+    }
+
+    /**
+     * 根据传入数据和规则，验证数据格式
+     * @param array $data
+     * @param array $rules
+     * @return DynamicModel
+     * @throws ApiException
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function validateData(array $data, array $rules)
+    {
+        $model = DynamicModel::validateData($data, $rules);
+
+        if ($model->hasErrors()) {
+            $errors = $model->getFirstErrors();
+            throw new ApiException(ApiException::PARAM_ERROR, array_shift($errors));
+        }
+
+        return $model;
     }
 
 }
