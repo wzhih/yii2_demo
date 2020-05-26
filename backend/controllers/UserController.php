@@ -29,16 +29,24 @@ class UserController extends BaseController
 
         //是否分页获取
         if (!$validate->all) {
-            $query = $query->offset($validate->page - 1)
+            $query = $query->offset(($validate->page - 1) * $validate->pageSize)
                 ->limit($validate->pageSize);
         }
 
-        $result = $query
+        $users = $query
             ->select(['id', 'username', 'created_at', 'updated_at'])
             ->with(['roles'])
             ->asArray()
             ->all();
-        return $this->success('success', ['users' => $result]);
+
+        $count = AdminModel::find()->count();
+        $results = [
+            'page' => $validate->page,
+            'pageSize' => $validate->all ? $count : $validate->pageSize,
+            'count' => $count,
+            'users' => $users,
+        ];
+        return $this->success('success', $results);
     }
 
     public function actionAdd()

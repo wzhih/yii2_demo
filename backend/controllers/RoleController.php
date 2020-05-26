@@ -29,15 +29,23 @@ class RoleController extends BaseController
 
         //是否分页获取
         if (!$validate->all) {
-            $query = $query->offset($validate->page - 1)
+            $query = $query->offset(($validate->page - 1) * $validate->pageSize)
                 ->limit($validate->pageSize);
         }
 
-        $result = $query
+        $roles = $query
             ->with(['permissions'])
             ->asArray()
             ->all();
-        return $this->success('success', ['roles' => $result]);
+
+        $count = RoleModel::find()->count();
+        $results = [
+            'page' => $validate->page,
+            'pageSize' => $validate->all ? $count : $validate->pageSize,
+            'count' => $count,
+            'roles' => $roles,
+        ];
+        return $this->success('success', $results);
     }
 
     public function actionAdd()

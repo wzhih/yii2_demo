@@ -28,15 +28,23 @@ class PermissionController extends BaseController
 
         //是否分页获取
         if (!$validate->all) {
-            $query = $query->offset($validate->page - 1)
+            $query = $query->offset(($validate->page - 1) * $validate->pageSize)
                 ->limit($validate->pageSize);
         }
 
-        $result = $query
+        $permissions = $query
             ->with(['roles'])
             ->asArray()
             ->all();
-        return $this->success('success', ['users' => $result]);
+
+        $count = PermissionModel::find()->count();
+        $results = [
+            'page' => $validate->page,
+            'pageSize' => $validate->all ? $count : $validate->pageSize,
+            'count' => $count,
+            'permissions' => $permissions,
+        ];
+        return $this->success('success', $results);
     }
 
     public function actionAdd()
