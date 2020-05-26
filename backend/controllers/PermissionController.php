@@ -131,4 +131,26 @@ class PermissionController extends BaseController
         }
 
     }
+
+    public function actionShow()
+    {
+        $data = $this->getPost([
+            'id' => '',
+        ]);
+
+        $validate = $this->validateData($data, [
+            ['id', 'integer'],
+        ]);
+
+        $model = PermissionModel::find()
+            ->where(['id' => $validate->id])
+            ->with(['roles'])
+            ->asArray()
+            ->one();
+        if (!$model) {
+            throw new ApiException(ApiException::PERMISSION_NOT_EXIST_ERROR);
+        }
+
+        return $this->success('success', ['permission' => $model]);
+    }
 }

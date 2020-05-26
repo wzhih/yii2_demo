@@ -178,4 +178,27 @@ class UserController extends BaseController
         }
 
     }
+
+    public function actionShow()
+    {
+        $data = $this->getPost([
+            'id' => '',
+        ]);
+
+        $validate = $this->validateData($data, [
+            ['id', 'integer'],
+        ]);
+
+        $model = AdminModel::find()
+            ->select(['id', 'username', 'created_at', 'updated_at'])
+            ->where(['id' => $validate->id])
+            ->with(['roles', 'permissions'])
+            ->asArray()
+            ->one();
+        if (!$model) {
+            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR);
+        }
+
+        return $this->success('success', ['user' => $model]);
+    }
 }

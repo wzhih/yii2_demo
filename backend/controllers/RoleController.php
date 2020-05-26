@@ -171,4 +171,26 @@ class RoleController extends BaseController
         }
 
     }
+
+    public function actionShow()
+    {
+        $data = $this->getPost([
+            'id' => '',
+        ]);
+
+        $validate = $this->validateData($data, [
+            ['id', 'integer'],
+        ]);
+
+        $model = RoleModel::find()
+            ->where(['id' => $validate->id])
+            ->with(['permissions'])
+            ->asArray()
+            ->one();
+        if (!$model) {
+            throw new ApiException(ApiException::ROLE_NOT_EXIST_ERROR);
+        }
+
+        return $this->success('success', ['role' => $model]);
+    }
 }
