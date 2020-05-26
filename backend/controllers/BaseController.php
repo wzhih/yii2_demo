@@ -103,6 +103,9 @@ class BaseController extends Controller
         $data = [];
         foreach ($rules as $name => $default) {
             $data[$name] = $request->post($name, $default);
+            if (is_array($default) && !is_array($data[$name])) {
+                $data[$name] = [];
+            }
         }
 
         return $data;
