@@ -51,4 +51,29 @@ class LoginController extends Controller
         $data['token'] = self::generateToken($data);
         return $this->success('success', $data);
     }
+
+    public function actionInfo()
+    {
+        $request = Yii::$app->request;
+        $token = $request->getHeaders()->get('X-Token');
+        if (empty($token)) {
+            throw new ApiException(ApiException::NO_TOKEN_ERROR);
+        }
+
+        //验证token
+        self::verifyToken($token);
+        $data = self::getTokenData($token);
+
+        $model = AdminModel::findOne($data->id);
+        if (!$model) {
+            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR);
+        }
+
+        $result = [
+            'name' => $model->username,
+            'avatar' => 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+        ];
+
+        return $this->success('success', $result);
+    }
 }
