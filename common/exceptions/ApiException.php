@@ -24,6 +24,12 @@ class ApiException extends BaseException
     const ADD_ROLE_ERROR = 10014;
     const UPDATE_ROLE_ERROR = 10015;
     const DEL_ROLE_ERROR = 10016;
+    const PERMISSION_NOT_EXIST_ERROR = 10017;
+    const PERMISSION_NAME_EXIST_ERROR = 100018;
+    const PERMISSION_EXIST_ERROR = 100019;
+    const ADD_PERMISSION_ERROR = 10020;
+    const UPDATE_PERMISSION_ERROR = 10021;
+    const DEL_PERMISSION_ERROR = 10022;
 
     public function getExceptionMessage()
     {
@@ -45,6 +51,12 @@ class ApiException extends BaseException
             self::ADD_ROLE_ERROR => '添加角色失败',
             self::UPDATE_ROLE_ERROR => '更新角色失败',
             self::DEL_ROLE_ERROR => '删除角色失败',
+            self::PERMISSION_NOT_EXIST_ERROR => '权限不存在',
+            self::PERMISSION_NAME_EXIST_ERROR => '权限名称已存在',
+            self::PERMISSION_EXIST_ERROR => '权限标识已存在',
+            self::ADD_PERMISSION_ERROR => '添加权限失败',
+            self::UPDATE_PERMISSION_ERROR => '更新权限失败',
+            self::DEL_PERMISSION_ERROR => '删除权限失败',
         ];
     }
 
