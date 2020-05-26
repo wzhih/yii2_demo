@@ -151,7 +151,6 @@ class UserController extends BaseController
             throw new ApiException(ApiException::UPDATE_ADMIN_ERROR, $exception->getMessage());
         }
 
-        return $this->success('success');
     }
 
     public function actionDelete()
@@ -172,11 +171,11 @@ class UserController extends BaseController
             AdminModel::deleteAll(['id' => $validate->id]);
 
             $transaction->commit();
+            return $this->success('success');
         } catch (\Throwable $exception) {
             $transaction->rollBack();
             throw new ApiException(ApiException::DEL_ADMIN_ERROR, $exception->getMessage());
         }
 
-        return $this->success('success');
     }
 }

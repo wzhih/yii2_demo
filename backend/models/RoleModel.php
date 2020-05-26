@@ -13,7 +13,7 @@ class RoleModel extends BaseModel
 
     public function getPermissions()
     {
-        return $this->hasMany(RoleModel::className(), ['id' => 'permission_id'])
+        return $this->hasMany(PermissionModel::className(), ['id' => 'permission_id'])
             ->viaTable('t_role_permission', ['role_id' => 'id']);
     }
 }

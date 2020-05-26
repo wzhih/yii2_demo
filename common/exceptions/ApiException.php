@@ -19,6 +19,11 @@ class ApiException extends BaseException
     const UPDATE_ADMIN_ERROR = 10009;
     const DEL_ADMIN_ERROR = 10010;
     const ADMIN_USERNAME_EXIST_ERROR = 100011;
+    const ROLE_NOT_EXIST_ERROR = 10012;
+    const ROLE_NAME_EXIST_ERROR = 100013;
+    const ADD_ROLE_ERROR = 10014;
+    const UPDATE_ROLE_ERROR = 10015;
+    const DEL_ROLE_ERROR = 10016;
 
     public function getExceptionMessage()
     {
@@ -35,6 +40,11 @@ class ApiException extends BaseException
             self::ADD_ADMIN_ERROR => '添加用户失败',
             self::UPDATE_ADMIN_ERROR => '更新用户失败',
             self::DEL_ADMIN_ERROR => '删除用户失败',
+            self::ROLE_NOT_EXIST_ERROR => '角色不存在',
+            self::ROLE_NAME_EXIST_ERROR => '角色名已存在',
+            self::ADD_ROLE_ERROR => '添加角色失败',
+            self::UPDATE_ROLE_ERROR => '更新角色失败',
+            self::DEL_ROLE_ERROR => '删除角色失败',
         ];
     }
 
