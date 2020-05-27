@@ -171,9 +171,9 @@ class RoleController extends BaseController
             throw new ApiException(ApiException::ROLE_NOT_EXIST_ERROR);
         }
 
-        //admin角色不可修改
+        //admin角色不可删除
         if ($model->name == 'admin') {
-            return $this->success('success');
+            throw new ApiException(ApiException::DEL_ADMIN_ERROR, 'admin角色不可删除');
         }
 
         $transaction = RoleModel::getDb()->beginTransaction();
