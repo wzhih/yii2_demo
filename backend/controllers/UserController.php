@@ -179,6 +179,16 @@ class UserController extends BaseController
             ['id', 'required'],
         ]);
 
+        $model = AdminModel::findOne($validate->id);
+        if (!$model) {
+            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR);
+        }
+
+        //admin用户不可删除
+        if ($model->username == 'admin') {
+            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR, 'admin用户不可删除');
+        }
+
         $transaction = AdminModel::getDb()->beginTransaction();
         try {
             //删除关系
@@ -205,16 +215,6 @@ class UserController extends BaseController
             ['id', 'integer'],
             ['id', 'required'],
         ]);
-
-        $model = AdminModel::findOne($validate->id);
-        if (!$model) {
-            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR);
-        }
-
-        //admin用户不可删除
-        if ($model->username == 'admin') {
-            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR, 'admin用户不可删除');
-        }
 
         $model = AdminModel::find()
             ->select(['id', 'username', 'created_at', 'updated_at'])
