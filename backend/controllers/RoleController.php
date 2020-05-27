@@ -57,7 +57,7 @@ class RoleController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
-            ['username', 'required'],
+            ['name', 'required'],
             ['name', 'string'],
             ['permissions', 'default', 'value' => []],
         ]);
@@ -165,6 +165,16 @@ class RoleController extends BaseController
             ['id', 'integer'],
             ['id', 'required'],
         ]);
+
+        $model = RoleModel::findOne($validate->id);
+        if (!$model) {
+            throw new ApiException(ApiException::ROLE_NOT_EXIST_ERROR);
+        }
+
+        //admin角色不可修改
+        if ($model->name == 'admin') {
+            return $this->success('success');
+        }
 
         $transaction = RoleModel::getDb()->beginTransaction();
         try {
