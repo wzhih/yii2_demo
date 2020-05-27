@@ -106,7 +106,7 @@ class UserController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
-            [['id', 'username', 'password'], 'required'],
+            [['id', 'username'], 'required'],
             ['id', 'integer'],
             ['username', 'string'],
             ['password', 'string'],
@@ -126,8 +126,12 @@ class UserController extends BaseController
             throw new ApiException(ApiException::ADMIN_USERNAME_EXIST_ERROR);
         }
 
+        //有传密码，才修改
+        if ($validate->password) {
+            $model->password = password_hash($validate->password, PASSWORD_DEFAULT);
+        }
+
         //admin用户只可以修改密码
-        $model->password = password_hash($validate->password, PASSWORD_DEFAULT);
         if ($model->username == 'admin') {
             if ($model->save()) {
                 return $this->success('success');
