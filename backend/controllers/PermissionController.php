@@ -33,6 +33,7 @@ class PermissionController extends BaseController
         }
 
         $permissions = $query
+            ->orderBy('updated_at desc')
             ->with(['roles'])
             ->asArray()
             ->all();

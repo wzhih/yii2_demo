@@ -35,6 +35,7 @@ class UserController extends BaseController
 
         $users = $query
             ->select(['id', 'username', 'created_at', 'updated_at'])
+            ->orderBy('updated_at desc')
             ->with(['roles'])
             ->asArray()
             ->all();
