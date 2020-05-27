@@ -42,7 +42,7 @@ class RoleController extends BaseController
         $results = [
             'page' => $validate->page,
             'pageSize' => $validate->all ? $count : $validate->pageSize,
-            'count' => $count,
+            'count' => (int) $count,
             'roles' => $roles,
         ];
         return $this->success('success', $results);

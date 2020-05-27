@@ -43,7 +43,7 @@ class UserController extends BaseController
         $results = [
             'page' => $validate->page,
             'pageSize' => $validate->all ? $count : $validate->pageSize,
-            'count' => $count,
+            'count' => (int) $count,
             'users' => $users,
         ];
         return $this->success('success', $results);

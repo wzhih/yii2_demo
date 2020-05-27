@@ -41,7 +41,7 @@ class PermissionController extends BaseController
         $results = [
             'page' => $validate->page,
             'pageSize' => $validate->all ? $count : $validate->pageSize,
-            'count' => $count,
+            'count' => (int) $count,
             'permissions' => $permissions,
         ];
         return $this->success('success', $results);
