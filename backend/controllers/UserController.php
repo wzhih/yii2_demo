@@ -58,6 +58,7 @@ class UserController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
+            [['username', 'password'], 'required'],
             ['username', 'string'],
             ['password', 'string'],
             ['roles', 'default', 'value' => []],
@@ -105,6 +106,7 @@ class UserController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
+            [['id', 'username', 'password'], 'required'],
             ['id', 'integer'],
             ['username', 'string'],
             ['password', 'string'],
@@ -169,6 +171,7 @@ class UserController extends BaseController
 
         $validate = $this->validateData($data, [
             ['id', 'integer'],
+            ['id', 'required'],
         ]);
 
         $transaction = AdminModel::getDb()->beginTransaction();
@@ -195,6 +198,7 @@ class UserController extends BaseController
 
         $validate = $this->validateData($data, [
             ['id', 'integer'],
+            ['id', 'required'],
         ]);
 
         $model = AdminModel::find()

@@ -56,6 +56,7 @@ class RoleController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
+            ['username', 'required'],
             ['name', 'string'],
             ['permissions', 'default', 'value' => []],
         ]);
@@ -100,6 +101,7 @@ class RoleController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
+            [['id', 'name'], 'required'],
             ['id', 'integer'],
             ['name', 'string'],
             ['permissions', 'default', 'value' => []],
@@ -160,6 +162,7 @@ class RoleController extends BaseController
 
         $validate = $this->validateData($data, [
             ['id', 'integer'],
+            ['id', 'required'],
         ]);
 
         $transaction = RoleModel::getDb()->beginTransaction();
@@ -188,6 +191,7 @@ class RoleController extends BaseController
 
         $validate = $this->validateData($data, [
             ['id', 'integer'],
+            ['id', 'required'],
         ]);
 
         $model = RoleModel::find()

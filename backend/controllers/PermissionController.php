@@ -55,6 +55,7 @@ class PermissionController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
+            [['name', 'permission'], 'required'],
             ['name', 'string'],
             ['permission', 'string'],
         ]);
@@ -86,6 +87,7 @@ class PermissionController extends BaseController
         ]);
 
         $validate = $this->validateData($data, [
+            [['id', 'name', 'permission'], 'required'],
             ['id', 'integer'],
             ['name', 'string'],
             ['permission', 'string'],
@@ -122,6 +124,7 @@ class PermissionController extends BaseController
 
         $validate = $this->validateData($data, [
             ['id', 'integer'],
+            ['id', 'required'],
         ]);
 
         $transaction = PermissionModel::getDb()->beginTransaction();
@@ -148,6 +151,7 @@ class PermissionController extends BaseController
 
         $validate = $this->validateData($data, [
             ['id', 'integer'],
+            ['id', 'required'],
         ]);
 
         $model = PermissionModel::find()
