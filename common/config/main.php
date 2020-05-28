@@ -11,22 +11,5 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
-        'request' => [
-            #关闭Csrf验证
-            'enableCsrfValidation' => false,
-            #json请求数据解析
-            'parsers' => [
-                'application/json' => 'yii\web\JsonParser',
-            ]
-        ],
-        'errorHandler' => [
-            'class' => 'common\exceptions\SystemException',
-        ],
-        'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
-            ],
-        ],
     ],
 ];

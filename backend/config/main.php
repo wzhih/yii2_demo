@@ -15,6 +15,12 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            #关闭Csrf验证
+            'enableCsrfValidation' => false,
+            #json请求数据解析
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -35,16 +41,14 @@ return [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'class' => 'common\exceptions\SystemException',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
             ],
         ],
-        */
     ],
     'params' => $params,
 ];
