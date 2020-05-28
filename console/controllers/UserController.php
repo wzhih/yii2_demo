@@ -2,7 +2,6 @@
 
 namespace console\controllers;
 
-use console\models\UserLoginLogModel;
 use Yii;
 use Carbon\Carbon;
 use yii\console\Controller;
