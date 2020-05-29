@@ -102,7 +102,8 @@ class BaseController extends Controller
         $request = Yii::$app->request;
         $data = [];
         foreach ($rules as $name => $default) {
-            $data[$name] = empty($request->post($name)) ? $default : $request->post($name);
+            $value = empty($request->post($name)) ? $default : $request->post($name);
+            $data[$name] = trim($data[$name]);
             if (is_array($default) && !is_array($data[$name])) {
                 $data[$name] = [];
             }

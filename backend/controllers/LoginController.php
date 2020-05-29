@@ -72,6 +72,8 @@ class LoginController extends Controller
         $result = [
             'name' => $model->username,
             'avatar' => 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
+            'roles' => array_column($model->roles, 'name'),
+            'permissions' => array_column($model->permissions, 'permission'),
         ];
 
         return $this->success('success', $result);

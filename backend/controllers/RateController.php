@@ -19,13 +19,13 @@ class RateController extends BaseController
             'end' => Carbon::today()->toDateString(),
         ]);
 
-//        $validate = $this->validateData($data, [
-//            [['start', 'end'], 'date'],
-//        ]);
+        $validate = $this->validateData($data, [
+            [['start', 'end'], 'date', 'format' => 'php:Y-m-d'],
+        ]);
 
         $results = DayRateModel::find()
-            ->where(['>=', 'day', $data['start']])
-            ->andWhere(['<=', 'day', $data['end']])
+            ->where(['>=', 'day', $validate->start])
+            ->andWhere(['<=', 'day', $validate->end])
             ->asArray()
             ->all();
 
