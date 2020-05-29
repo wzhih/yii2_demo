@@ -103,10 +103,11 @@ class BaseController extends Controller
         $data = [];
         foreach ($rules as $name => $default) {
             $value = empty($request->post($name)) ? $default : $request->post($name);
-            $data[$name] = trim($value);
-            if (is_array($default) && !is_array($data[$name])) {
+            if (is_array($default) && !is_array($value)) {
                 $data[$name] = [];
             }
+
+            $data[$name] = $this->trimStr($value);
         }
 
         return $data;
@@ -132,4 +133,21 @@ class BaseController extends Controller
         return $model;
     }
 
+    /**
+     * 过滤变量前后空格和特殊字符
+     * @param $data
+     * @return array|string
+     */
+    public function trimStr($data)
+    {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $data[$key] = $this->trimStr($value);
+            }
+
+            return $data;
+        } else {
+            return trim($data);
+        }
+    }
 }

@@ -40,8 +40,8 @@ class PermissionController extends BaseController
 
         $count = PermissionModel::find()->count();
         $results = [
-            'page' => $validate->page,
-            'pageSize' => $validate->all ? $count : $validate->pageSize,
+            'page' => (int) $validate->page,
+            'pageSize' => (int) $validate->all ? $count : $validate->pageSize,
             'count' => (int) $count,
             'permissions' => $permissions,
         ];
