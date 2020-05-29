@@ -70,7 +70,7 @@ class UserController extends Controller
         if ($count == 0) {
             //新注册数等于零，留存率直接为0%
             $sql = <<<SQL
-INSERT INTO `user_day_retention_rate` ( `day`, `rate`, `created_at`, `updated_at` )
+INSERT INTO `t_user_day_retention_rate` ( `day`, `rate`, `created_at`, `updated_at` )
 VALUES
 	( '{$day->toDateString()}', 0, {$time}, {$time} ) 
 	ON DUPLICATE KEY UPDATE rate = 0,
@@ -92,8 +92,8 @@ SQL;
 SELECT
 	COUNT( DISTINCT l.userId ) as counts
 FROM
-	user_login_log AS l
-	INNER JOIN `user` AS u ON l.userId = u.id 
+	t_user_login_log AS l
+	INNER JOIN `t_user` AS u ON l.userId = u.id 
 WHERE
 	l.loginTime >= {$t_start_time} AND l.loginTime <= {$t_end_time}
 	AND u.createdAt >= {$start_time} AND u.createdAt <= {$end_time}
@@ -102,7 +102,7 @@ SQL;
         $rate = bcdiv($login_count * 100, $count, 2);
 
         $sql = <<<SQL
-INSERT INTO `user_day_retention_rate` ( `day`, `rate`, `created_at`, `updated_at` )
+INSERT INTO `t_user_day_retention_rate` ( `day`, `rate`, `created_at`, `updated_at` )
 VALUES
 	( '{$day->toDateString()}', {$rate}, {$time}, {$time} ) 
 	ON DUPLICATE KEY UPDATE rate = {$rate},

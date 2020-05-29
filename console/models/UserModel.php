@@ -7,6 +7,6 @@ class UserModel extends ActiveRecord
 {
     public static function tableName()
     {
-        return 'user';
+        return 't_user';
     }
 }
