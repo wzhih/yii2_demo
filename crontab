@@ -1,0 +1,2 @@
+5 0 * * * root /www/advanced/yii user/day-register
+10 * * * * root /www/advanced/yii user/hour-login
