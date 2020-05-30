@@ -115,7 +115,7 @@ class RoleController extends BaseController
 
         //admin角色不可修改
         if ($model->name == 'admin') {
-            return $this->success('success');
+            return $this->success('admin角色禁止修改');
         }
 
         $exist = RoleModel::find()
@@ -173,7 +173,7 @@ class RoleController extends BaseController
 
         //admin角色不可删除
         if ($model->name == 'admin') {
-            throw new ApiException(ApiException::DEL_ADMIN_ERROR, 'admin角色不可删除');
+            throw new ApiException(ApiException::DEL_ADMIN_ERROR, 'admin角色禁止删除');
         }
 
         $transaction = RoleModel::getDb()->beginTransaction();

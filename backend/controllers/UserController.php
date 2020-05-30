@@ -135,7 +135,7 @@ class UserController extends BaseController
         //admin用户只可以修改密码
         if ($model->username == 'admin') {
             if ($model->save()) {
-                return $this->success('success');
+                return $this->success('admin用户只修改密码');
             }
         }
 
@@ -186,7 +186,7 @@ class UserController extends BaseController
 
         //admin用户不可删除
         if ($model->username == 'admin') {
-            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR, 'admin用户不可删除');
+            throw new ApiException(ApiException::ADMIN_NOT_EXIST_ERROR, 'admin用户禁止删除');
         }
 
         $transaction = AdminModel::getDb()->beginTransaction();
